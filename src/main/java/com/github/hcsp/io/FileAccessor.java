@@ -16,11 +16,11 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FileAccessor {
-    
-    public static List<String> readFile1(File file)  {
-        List<String> lines =null;
-        try(FileInputStream fileInputStream = new FileInputStream(file);) {
-            lines =  IOUtils.readLines(fileInputStream,"UTF-8");
+
+    public static List<String> readFile1(File file) {
+        List<String> lines = null;
+        try (FileInputStream fileInputStream = new FileInputStream(file);) {
+            lines = IOUtils.readLines(fileInputStream, "UTF-8");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -29,9 +29,9 @@ public class FileAccessor {
 
     public static List<String> readFile2(File file) {
         List<String> list = new ArrayList();
-        try (FileInputStream fileInputStream = new FileInputStream(file);){
+        try (FileInputStream fileInputStream = new FileInputStream(file);) {
             byte[] bytes = new byte[1024];
-            int len =-1;
+            int len = -1;
             while ((len = fileInputStream.read(bytes)) != -1) {
                 list.add(new String(bytes, 0, len));
             }
@@ -44,10 +44,10 @@ public class FileAccessor {
 
     public static List<String> readFile3(File file) {
         List<String> list = new ArrayList();
-        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file));){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file));) {
             String line = null;
             line = bufferedReader.readLine();
-            while (line != null){
+            while (line != null) {
                 list.add(line);
                 try {
                     line = bufferedReader.readLine();
@@ -63,10 +63,10 @@ public class FileAccessor {
 
     public static void writeLinesToFile1(List<String> lines, File file) {
         Iterator<String> iterator = lines.iterator();
-        try(FileOutputStream fileOutputStream = new FileOutputStream(file);) {
-            while (iterator.hasNext()){
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file);) {
+            while (iterator.hasNext()) {
                 try {
-                    IOUtils.write(iterator.next(),fileOutputStream,"UTF-8");
+                    IOUtils.write(iterator.next(), fileOutputStream, "UTF-8");
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -78,8 +78,8 @@ public class FileAccessor {
 
     public static void writeLinesToFile2(List<String> lines, File file) {
         Iterator<String> iterator = lines.iterator();
-        try(FileOutputStream fileOutputStream = new FileOutputStream(file);) {
-            while (iterator.hasNext()){
+        try (FileOutputStream fileOutputStream = new FileOutputStream(file);) {
+            while (iterator.hasNext()) {
                 byte[] bytes = iterator.next().getBytes();
                 try {
                     fileOutputStream.write(bytes);
@@ -95,7 +95,7 @@ public class FileAccessor {
     public static void writeLinesToFile3(List<String> lines, File file) {
         Iterator<String> iterator = lines.iterator();
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));) {
-            while (iterator.hasNext()){
+            while (iterator.hasNext()) {
                 try {
                     bufferedWriter.write(iterator.next());
                 } catch (IOException e) {
