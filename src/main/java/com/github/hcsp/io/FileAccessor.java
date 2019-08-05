@@ -12,7 +12,6 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class FileAccessor {
@@ -29,11 +28,16 @@ public class FileAccessor {
 
     public static List<String> readFile2(File file) {
         List<String> list = new ArrayList();
-        try (FileInputStream fileInputStream = new FileInputStream(file);) {
-            byte[] bytes = new byte[1024];
-            int len = -1;
-            while ((len = fileInputStream.read(bytes)) != -1) {
-                list.add(new String(bytes, 0, len));
+        String line = new String();
+        int b = -1;
+        try (FileInputStream fileInputStream = new FileInputStream(file)) {
+            while ( ( b = fileInputStream.read() )!= -1) {
+                if((char) b != '\n' ){
+                    line += String.valueOf((char) b);
+                }else {
+                    list.add(line);
+                    line = "";
+                }
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -62,48 +66,34 @@ public class FileAccessor {
     }
 
     public static void writeLinesToFile1(List<String> lines, File file) {
-        Iterator<String> iterator = lines.iterator();
-        try (FileOutputStream fileOutputStream = new FileOutputStream(file);) {
-            while (iterator.hasNext()) {
-                try {
-                    IOUtils.write(iterator.next(), fileOutputStream, "UTF-8");
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        for (String line : lines) {
+            try (FileOutputStream fileOutputStream = new FileOutputStream(file, true);) {
+                IOUtils.write(line + "\n", fileOutputStream, "UTF-8");
+            } catch (IOException ex) {
+                ex.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
+
     public static void writeLinesToFile2(List<String> lines, File file) {
-        Iterator<String> iterator = lines.iterator();
-        try (FileOutputStream fileOutputStream = new FileOutputStream(file);) {
-            while (iterator.hasNext()) {
-                byte[] bytes = iterator.next().getBytes();
-                try {
-                    fileOutputStream.write(bytes);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        for (String line : lines) {
+            try (FileOutputStream fileOutputStream = new FileOutputStream(file, true)) {
+                final byte[] bytes = (line + "\n").getBytes();
+                fileOutputStream.write(bytes);
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
     public static void writeLinesToFile3(List<String> lines, File file) {
-        Iterator<String> iterator = lines.iterator();
-        try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));) {
-            while (iterator.hasNext()) {
-                try {
-                    bufferedWriter.write(iterator.next());
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
+        for (String line : lines) {
+            try (final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
+                bufferedWriter.write(line + "\n");
+            } catch (IOException e) {
+                e.printStackTrace();
             }
-        } catch (IOException e) {
-            e.printStackTrace();
         }
     }
 
