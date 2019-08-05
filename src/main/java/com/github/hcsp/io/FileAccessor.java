@@ -16,6 +16,7 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FileAccessor {
+    
     public static List<String> readFile1(File file)  {
         List<String> lines =null;
         try(FileInputStream fileInputStream = new FileInputStream(file);) {
