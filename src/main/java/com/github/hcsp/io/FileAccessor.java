@@ -1,6 +1,5 @@
 package com.github.hcsp.io;
 
-import org.apache.commons.io.IOUtils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -13,6 +12,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
+import org.apache.commons.io.IOUtils;
 
 public class FileAccessor {
 
@@ -31,10 +32,10 @@ public class FileAccessor {
         String line = new String();
         int b = -1;
         try (FileInputStream fileInputStream = new FileInputStream(file)) {
-            while ( ( b = fileInputStream.read() )!= -1) {
-                if((char) b != '\n' ){
+            while ((b = fileInputStream.read()) != -1) {
+                if ((char) b != '\n') {
                     line += String.valueOf((char) b);
-                }else {
+                } else {
                     list.add(line);
                     line = "";
                 }
@@ -90,7 +91,7 @@ public class FileAccessor {
 
     public static void writeLinesToFile3(List<String> lines, File file) {
         for (String line : lines) {
-            try (final BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
+            try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file, true))) {
                 bufferedWriter.write(line + "\n");
             } catch (IOException e) {
                 e.printStackTrace();
