@@ -16,7 +16,6 @@ import java.util.Iterator;
 import java.util.List;
 
 public class FileAccessor {
-    //  common io
     public static List<String> readFile1(File file)  {
         List<String> lines =null;
         try(FileInputStream fileInputStream = new FileInputStream(file);) {
@@ -27,7 +26,6 @@ public class FileAccessor {
         return lines;
     }
 
-    //  最原始FileInputStream/FileOutputStream，一个字符一个字符的读取
     public static List<String> readFile2(File file) {
         List<String> list = new ArrayList();
         try (FileInputStream fileInputStream = new FileInputStream(file);){
@@ -43,7 +41,6 @@ public class FileAccessor {
 
     }
 
-    //使用BufferReader/BufferedWriter，一行一行地读写文件
     public static List<String> readFile3(File file) {
         List<String> list = new ArrayList();
         try (BufferedReader bufferedReader = new BufferedReader(new FileReader(file));){
@@ -63,7 +60,6 @@ public class FileAccessor {
         return list;
     }
 
-    // common io 写文件
     public static void writeLinesToFile1(List<String> lines, File file) {
         Iterator<String> iterator = lines.iterator();
         try(FileOutputStream fileOutputStream = new FileOutputStream(file);) {
@@ -79,7 +75,6 @@ public class FileAccessor {
         }
     }
 
-    // 最原始FileInputStream/FileOutputStream，一个字符一个字符的读取
     public static void writeLinesToFile2(List<String> lines, File file) {
         Iterator<String> iterator = lines.iterator();
         try(FileOutputStream fileOutputStream = new FileOutputStream(file);) {
@@ -96,7 +91,6 @@ public class FileAccessor {
         }
     }
 
-    // 使用BufferReader/BufferedWriter，一行一行地读写文件
     public static void writeLinesToFile3(List<String> lines, File file) {
         Iterator<String> iterator = lines.iterator();
         try (BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));) {
