@@ -57,6 +57,7 @@ public class FileAccessor {
                     line = bufferedReader.readLine();
                 } catch (IOException e) {
                     e.printStackTrace();
+                    break;
                 }
             }
         } catch (IOException e) {
