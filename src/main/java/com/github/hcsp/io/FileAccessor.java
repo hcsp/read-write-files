@@ -62,6 +62,5 @@ public class FileAccessor {
     public static void writeLinesToFile3(List<String> lines, File file) throws IOException {
         Files.write(file.toPath(), lines);
     }
-    
 }
 
