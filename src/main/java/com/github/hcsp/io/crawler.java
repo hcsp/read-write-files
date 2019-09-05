@@ -14,17 +14,13 @@ public class crawler {
         CloseableHttpClient httpclient = HttpClients.createDefault();
         HttpGet httpGet = new HttpGet("https://news.sina.com.cn/");
         CloseableHttpResponse response1 = httpclient.execute(httpGet);
-        try
-
-        {
+        try {
             System.out.println(response1.getStatusLine());
             HttpEntity entity1 = response1.getEntity();
             // do something useful with the response body
             // and ensure it is fully consumed
             EntityUtils.consume(entity1);
-        } finally
-
-        {
+        } finally {
             response1.close();
         }
 
