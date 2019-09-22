@@ -23,7 +23,7 @@ public class FileAccessor {
         List<String> result = new ArrayList<>();
         BufferedReader reader = new BufferedReader(new FileReader(file));
         String line;
-        while((line = reader.readLine()) != null){
+        while ((line = reader.readLine()) != null){
             result.add(line);
         }
         return result;
@@ -34,12 +34,12 @@ public class FileAccessor {
         FileInputStream fis = new FileInputStream(file);
         int len;
         StringBuilder sb = new StringBuilder();
-        while((len = fis.read()) != -1){
-            char c = (char)len;
-            if(c == '\n'){
+        while ((len = fis.read()) != -1){
+            char c = (char) len;
+            if (c == '\n'){
                 result.add(sb.toString());
                 sb = new StringBuilder();
-            }else{
+            }else {
                 sb.append(c);
             }
         }
@@ -52,7 +52,7 @@ public class FileAccessor {
 
     public static void writeLinesToFile2(List<String> lines, File file) throws IOException {
         FileWriter fw = new FileWriter(file);
-        for(String line : lines){
+        for (String line : lines){
             fw.write(line);
             fw.write("\n");
         }
@@ -60,7 +60,7 @@ public class FileAccessor {
 
     public static void writeLinesToFile3(List<String> lines, File file) throws IOException {
         FileOutputStream fos = new FileOutputStream(file);
-        for(String line : lines){
+        for (String line : lines){
             fos.write(line.getBytes());
             fos.write("\n".getBytes());
         }
