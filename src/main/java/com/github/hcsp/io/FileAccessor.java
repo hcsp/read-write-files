@@ -25,7 +25,7 @@ public class FileAccessor {
             int b, currentIndex = 0;
             while ((b = fileInputStream.read()) != -1) {
                 if (NEW_LINE == b) {
-                    result.add(new String(bytes, 0, currentIndex - 1));
+                    result.add(new String(bytes, 0, currentIndex));
                     currentIndex = 0;
                     continue;
                 }
