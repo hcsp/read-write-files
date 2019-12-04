@@ -20,22 +20,23 @@ public class FileAccessor {
 
     public static List<String> readFile3(File file) throws IOException {
         ArrayList<String> lines3 = new ArrayList<>();
-        FileReader fr = new FileReader(file);//创建输入流对象
-        BufferedReader br = new BufferedReader(fr);//创建上一层输入流对象
-        String string = null;//声明一个字符串为空
+        FileReader fr = new FileReader(file);
+        BufferedReader br = new BufferedReader(fr);
+        String string = null;
         while ((string = br.readLine()) != null) {
             lines3.add(string);
-        }//读出字符串不为空的循环，打印字符串
-        br.close();//关闭上层输入流
-        fr.close();//关闭下层输入流
+        }
+        br.close();
+        fr.close();
         return lines3;
     }
 
     public static void writeLinesToFile1(List<String> lines, File file) throws IOException {
         FileUtils.writeLines(file, "UTF-8", lines);
     }
+
     public static void writeLinesToFile2(List<String> lines, File file) throws IOException {
-        Files.write(file.toPath(),lines);
+        Files.write(file.toPath(), lines);
     }
 
 
@@ -52,8 +53,8 @@ public class FileAccessor {
             bw.newLine();
         }
         bw.flush();
-        asd.close();//关闭上一层输出流
-        bw.close();//关闭输出流
+        asd.close();
+        bw.close();
 
 //        Files.newBufferedWriter(file.toPath(),lines,);
     }
