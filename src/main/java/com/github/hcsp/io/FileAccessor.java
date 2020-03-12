@@ -1,68 +1,47 @@
 package com.github.hcsp.io;
 
-import org.apache.commons.io.IOUtils;
+import org.apache.commons.io.FileUtils;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
 public class FileAccessor {
     public static List<String> readFile1(File file) throws IOException {
-        FileInputStream is = new FileInputStream(file);
         List<String> list = new ArrayList<>();
-        while (true) {
-            int b = is.read();
-            list.add(String.valueOf((char) b));
-            if (b == -1) {
-                break;
-            }
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String line;
+        while ((line = reader.readLine()) != null) {
+            list.add(line);
         }
+        reader.close();
         return list;
     }
 
     public static List<String> readFile2(File file) throws IOException {
-        return Files.readAllLines(file.toPath());
+        return FileUtils.readLines(file, "UTF-8");
     }
 
     public static List<String> readFile3(File file) throws IOException {
-        InputStream is = new FileInputStream(file);
-
-        List<String> list = new ArrayList<>();
-
-        list.add(IOUtils.toString(is, Charset.defaultCharset()));
-
-        return list;
+        return Files.readAllLines(Paths.get(file.getAbsolutePath()));
     }
 
     public static void writeLinesToFile1(List<String> lines, File file) throws IOException {
-        FileWriter writer;
-        writer = new FileWriter(file);
-
-        for (String line : lines) {
-            writer.write(line);
-            writer.flush();
-        }
-        writer.close();
+        Files.write(Paths.get(file.getAbsolutePath()), lines);
     }
 
     public static void writeLinesToFile2(List<String> lines, File file) throws IOException {
-        byte[] bytes;
-
-        FileOutputStream fos = new FileOutputStream(file);
-        for (String line : lines) {
-            bytes = line.getBytes();
-            fos.write(bytes);
-        }
-        fos.close();
+        FileUtils.writeLines(file, "UTF-8", lines);
     }
 
     public static void writeLinesToFile3(List<String> lines, File file) throws IOException { //通过传入File实例化Scanner类
+        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
         for (String line : lines) {
-            Files.write(file.toPath(), line.getBytes());
+            bufferedWriter.write(line + System.lineSeparator());
+            bufferedWriter.flush();
         }
     }
 
