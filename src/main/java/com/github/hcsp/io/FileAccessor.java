@@ -52,8 +52,8 @@ public class FileAccessor {
 
     //使用BufferWriter写入文件
     public static void writeLinesToFile2(List<String> lines, File file) throws IOException {
-
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(file));
+        FileWriter fw = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(fw);
         for (int i = 0; i < lines.size(); i++) {
             bufferedWriter.write(lines.get(i));
             bufferedWriter.newLine();
