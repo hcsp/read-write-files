@@ -9,10 +9,11 @@ import java.util.List;
 public class FileAccessor {
     public static List<String> readFile1(File file) throws IOException {
         FileReader fileReader = new FileReader(file);
-        int ch = 0;
+        int ch;
+        int preCh = 0;
         StringBuilder row = new StringBuilder();
         List<String> result = new ArrayList<>();
-        for (int preCh = 0; ch != -1; preCh = ch, ch = fileReader.read()) {
+        for (ch = fileReader.read(); ch != -1; preCh = ch, ch = fileReader.read()) {
             if (ch == '\r' || ch == '\n') {
                 if (preCh != '\r') {
                     result.add(row.toString());
