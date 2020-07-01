@@ -1,8 +1,6 @@
 package com.github.hcsp.io;
 
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
-import org.w3c.dom.ls.LSInput;
 
 import java.io.*;
 import java.nio.charset.Charset;
