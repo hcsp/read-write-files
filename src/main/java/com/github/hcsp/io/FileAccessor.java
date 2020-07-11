@@ -6,6 +6,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
+import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,20 +14,18 @@ import java.util.List;
 public class FileAccessor {
 
     public static List<String> readFile1(File file) throws IOException {
+        BufferedReader br = new BufferedReader(new FileReader(file));
         List<String> res = new ArrayList<>();
-        InputStream is = new FileInputStream(file);
-        while (true) {
-            int b = is.read();
-            if (b == -1) {
-                break;
-            }
-            res.add(String.valueOf((char) b));
+        String line;
+        while ((line = br.readLine()) != null) {
+            res.add(line);
         }
+        br.close();
         return res;
     }
 
     public static List<String> readFile2(File file) throws IOException {
-        return Files.readAllLines(file.toPath());
+        return Files.readAllLines(file.toPath(), Charset.defaultCharset());
     }
 
     public static List<String> readFile3(File file) throws IOException {
@@ -34,16 +33,14 @@ public class FileAccessor {
     }
 
     public static void writeLinesToFile1(List<String> lines, File file) throws IOException {
+        String s = String.join("\n", lines);
         OutputStream os = new FileOutputStream(file);
-        for (String s : lines) {
-            os.write(s.getBytes());
-        }
+        os.write(s.getBytes());
+        os.close();
     }
 
     public static void writeLinesToFile2(List<String> lines, File file) throws IOException {
-        for (String s : lines) {
-            Files.write(file.toPath(), s.getBytes());
-        }
+        Files.write(file.toPath(), lines, StandardOpenOption.WRITE);
     }
 
     public static void writeLinesToFile3(List<String> lines, File file) throws IOException {
