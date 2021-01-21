@@ -15,21 +15,7 @@ public class FileAccessor {
     }
 
     public static List<String> readFile2(File file) throws IOException {
-        List<String> stringList = new ArrayList<>();
-        StringBuilder stringBuilder = new StringBuilder();
-        InputStream inputStream = new FileInputStream(file);
-        while (true) {
-            int ch = inputStream.read();
-            if (ch == -1) {
-                break;
-            } else if (ch != ('\n') && ch != ('\r')) {
-                stringBuilder.append((char) ch);
-            } else if (ch == '\n') {
-                stringList.add(stringBuilder.toString());
-                stringBuilder = new StringBuilder();
-            }
-        }
-        return stringList;
+        return Files.readAllLines(file.toPath());
     }
 
 
@@ -51,23 +37,21 @@ public class FileAccessor {
     }
 
     public static void writeLinesToFile2(List<String> lines, File file) throws IOException {
-        OutputStream os = new FileOutputStream(file);
-        for(String line : lines){
-            os.write(line.getBytes(Charset.defaultCharset()));
-            String lineSeparator = System.getProperty("line.separator");
-            os.write(lineSeparator.getBytes());
-        }
+        FileOutputStream outputStream = new FileOutputStream(file);
+        outputStream.write(String.join("\n", lines).getBytes());
+        outputStream.close();
     }
 
 
     public static void writeLinesToFile3(List<String> lines, File file) throws IOException {
-        FileWriter fileWriter = new FileWriter(file);
-        BufferedWriter output = new BufferedWriter(fileWriter);
+        BufferedWriter writer = new BufferedWriter(new FileWriter(file));
+
         for (String line : lines) {
-            output.write(line);
-            output.newLine();
+            writer.write(line);
+            writer.newLine();
         }
-        output.close();
+
+        writer.close();
     }
 
     public static void main(String[] args) throws IOException {
