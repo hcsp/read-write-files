@@ -128,12 +128,12 @@ public class FileAccessor {
         File projectDir = new File(System.getProperty("basedir", System.getProperty("user.dir")));
         File testFile = new File(projectDir, "target/test.txt");
         List<String> lines = Arrays.asList("AAA", "BBB", "CCC");
-//        writeLinesToFile1(lines, testFile);
+        writeLinesToFile1(lines, testFile);
         writeLinesToFile2(lines, testFile);
         writeLinesToFile3(lines, testFile);
 
-//        System.out.println(readFile1(testFile));
-//        System.out.println(readFile2(testFile));
+        System.out.println(readFile1(testFile));
+        System.out.println(readFile2(testFile));
         System.out.println(readFile3(testFile));
     }
 }
