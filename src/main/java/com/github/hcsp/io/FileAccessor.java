@@ -1,130 +1,52 @@
 package com.github.hcsp.io;
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.*;
-import java.nio.charset.StandardCharsets;
+import java.nio.charset.Charset;
 import java.nio.file.Files;
-import java.nio.file.StandardOpenOption;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class FileAccessor {
-    public static List<String> readFile1(File file) {
+    public static List<String> readFile1(File file) throws IOException {
+        return FileUtils.readLines(file, Charset.defaultCharset());
+    }
+
+    public static List<String> readFile2(File file) throws IOException {
+        BufferedReader reader = new BufferedReader(new FileReader(file));
         List<String> list = new ArrayList<>();
-        FileInputStream fis = null;
-        try {
-            fis = new FileInputStream(file);
-            while (true) {
-                int read = fis.read();
-                if (read == -1) {
-                    break;
-                }
-                list.add("" + (char) read);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fis != null) {
-                try {
-                    fis.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+        String string;
+        while ((string = reader.readLine()) != null) {
+            list.add(string);
         }
         return list;
     }
 
-    public static List<String> readFile2(File file) {
-        List<String> list = new ArrayList<>();
-        BufferedReader br = null;
-        try {
-            br = new BufferedReader(new FileReader(file));
-            while (true) {
-                String s = br.readLine();
-                if (s == null) {
-                    break;
-                }
-                list.add(s);
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (br != null) {
-                try {
-                    br.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
-        return list;
+    public static List<String> readFile3(File file) throws IOException {
+        return Files.readAllLines(file.toPath());
     }
 
-    public static List<String> readFile3(File file) {
-        List<String> list = null;
-        try {
-            list = Files.readAllLines(file.toPath());
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return list;
+    public static void writeLinesToFile1(List<String> lines, File file) throws IOException {
+        FileUtils.writeLines(file, Charset.defaultCharset().name(), lines);
     }
 
-    public static void writeLinesToFile1(List<String> lines, File file) {
-        FileOutputStream fos = null;
-        try {
-            fos = new FileOutputStream(file);
-            for (String str : lines) {
-                fos.write(str.getBytes(StandardCharsets.UTF_8));
-                fos.flush();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (fos != null) {
-                try {
-                    fos.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
+    public static void writeLinesToFile2(List<String> lines, File file) throws IOException {
+        FileWriter fileWriter = new FileWriter(file);
+        BufferedWriter bufferedWriter = new BufferedWriter(fileWriter);
+        for (String line : lines) {
+            bufferedWriter.write(line);
+            bufferedWriter.newLine();
+            bufferedWriter.flush();
         }
     }
 
-    public static void writeLinesToFile2(List<String> lines, File file) {
-        BufferedWriter bw = null;
-        try {
-            bw = new BufferedWriter(new FileWriter(file));
-            for (String str : lines) {
-                bw.write(str);
-                bw.newLine();
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (bw != null) {
-                try {
-                    bw.close();
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-        }
+    public static void writeLinesToFile3(List<String> lines, File file) throws IOException {
+        Files.write(file.toPath(), lines, Charset.defaultCharset());
     }
 
-    public static void writeLinesToFile3(List<String> lines, File file) {
-        for (String str : lines) {
-            try {
-                Files.write(file.toPath(), str.getBytes(), StandardOpenOption.APPEND);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-
-        }
-    }
-
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         File projectDir = new File(System.getProperty("basedir", System.getProperty("user.dir")));
         File testFile = new File(projectDir, "target/test.txt");
         List<String> lines = Arrays.asList("AAA", "BBB", "CCC");
