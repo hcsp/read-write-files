@@ -16,7 +16,9 @@ public class FileAccessor {
         StringBuilder s = new StringBuilder();
         while ((i = fis.read()) != -1) {
             char a = (char) i;
-            if (i == 10) continue;
+            if (i == 10) {
+                continue;
+            }
             if (i == 13) {
                 result.add(s.toString());
                 s = new StringBuilder();
