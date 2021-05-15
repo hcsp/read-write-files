@@ -1,6 +1,7 @@
 package com.github.hcsp.io;
 
 import org.apache.commons.io.FileUtils;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -32,7 +33,7 @@ public class FileAccessor {
     }
 
     public static List<String> readFile2(File file) throws IOException {
-        return FileUtils.readLines(file,Charset.defaultCharset());
+        return FileUtils.readLines(file, Charset.defaultCharset());
     }
 
     public static List<String> readFile3(File file) throws IOException {
@@ -48,7 +49,7 @@ public class FileAccessor {
     }
 
     public static void writeLinesToFile2(List<String> lines, File file) throws IOException {
-        FileUtils.writeLines(file,lines);
+        FileUtils.writeLines(file, lines);
     }
 
     public static void writeLinesToFile3(List<String> lines, File file) throws IOException {
