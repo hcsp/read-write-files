@@ -1,12 +1,9 @@
 package com.github.hcsp.io;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
+import org.apache.commons.io.FileUtils;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.FileReader;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -35,13 +32,7 @@ public class FileAccessor {
     }
 
     public static List<String> readFile2(File file) throws IOException {
-        List<String> res = new ArrayList<>();
-        BufferedReader inStream = new BufferedReader(new FileReader(file));
-        String row;
-        while ((row = inStream.readLine()) != null) {
-            res.add(row);
-        }
-        return res;
+        return FileUtils.readLines(file,Charset.defaultCharset());
     }
 
     public static List<String> readFile3(File file) throws IOException {
@@ -57,12 +48,7 @@ public class FileAccessor {
     }
 
     public static void writeLinesToFile2(List<String> lines, File file) throws IOException {
-        BufferedWriter outStream = new BufferedWriter(new FileWriter(file));
-        for (String line : lines) {
-            outStream.write(line);
-            outStream.newLine();
-        }
-        outStream.close();
+        FileUtils.writeLines(file,lines);
     }
 
     public static void writeLinesToFile3(List<String> lines, File file) throws IOException {
