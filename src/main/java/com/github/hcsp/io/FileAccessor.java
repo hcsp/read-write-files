@@ -66,8 +66,8 @@ public class FileAccessor {
     public static void main(String[] args) throws IOException {
         File projectDir = new File(System.getProperty("basedir", System.getProperty("user.dir")));
         File testFile = new File(projectDir, "target/test.txt");
-        //List<String> lines = Arrays.asList("AAA", "BBB", "CCC");
-        List<String> lines = Arrays.asList("a", "b", " ", "   ", "c");
+        List<String> lines = Arrays.asList("AAA", "BBB", "CCC");
+        //List<String> lines = Arrays.asList("a", "b", " ", "   ", "c");
 
         writeLinesToFile1(lines, testFile);
         writeLinesToFile2(lines, testFile);
