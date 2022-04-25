@@ -10,7 +10,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.apache.commons.io.FileUtils.writeStringToFile;
 
 public class FileAccessor {
     public static List<String> readFile1(File file) throws IOException {
