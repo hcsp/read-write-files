@@ -68,7 +68,6 @@ public class FileAccessor {
         for (String s : lines) {
             byte[] bytes = s.getBytes(StandardCharsets.UTF_8);
             os.write(bytes);
-            os.write('\n');
 
         }
 
@@ -78,10 +77,10 @@ public class FileAccessor {
     public static void writeLinesToFile3(List<String> lines, File file) throws IOException {
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
         for (String s : lines) {
-            bw.write(s, 0, s.length());
-//            bw.write(s);
-            bw.write('\n');
+//            bw.write(s, 0, s.length());
+            bw.write(s);
         }
+
     }
     public static void writeLinesToFile4(List<String> lines, File file) throws IOException {
         Files.write(file.toPath(), lines);
