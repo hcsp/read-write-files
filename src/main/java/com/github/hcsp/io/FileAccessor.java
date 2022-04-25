@@ -5,6 +5,7 @@ import org.apache.commons.io.FileUtils;
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
+import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -13,9 +14,8 @@ import static org.apache.commons.io.FileUtils.writeStringToFile;
 
 public class FileAccessor {
     public static List<String> readFile1(File file) throws IOException {
-        List<String> readFileList;
-        readFileList = FileUtils.readLines(file, Charset.defaultCharset());
-        return readFileList;
+        return FileUtils.readLines(file, Charset.defaultCharset());
+
     }
 
     public static List<String> readFile2(File file) throws IOException {
@@ -30,16 +30,21 @@ public class FileAccessor {
             char c = (char) i;
             list.add(c);
             if (c == '\n') {
-                list1.add(list.toArray().toString());
+                StringBuilder sb = new StringBuilder();
+                for (Character character: list) {
+                    sb.append(character);
+
+                }
+                list1.add(sb.toString());
                 list.clear();
             }
-         }
+        }
         return list1;
 
     }
 
     public static List<String> readFile3(File file) throws IOException {
-        List<String> readFileList = null;
+        List<String> readFileList = new ArrayList<String>();
         BufferedReader br = new BufferedReader(new FileReader(file));
         while (br.readLine() != null) {
             readFileList.add(br.readLine());
@@ -47,11 +52,15 @@ public class FileAccessor {
         return readFileList;
 
     }
+    public static List<String> readFile4(File file) throws IOException {
+        return Files.readAllLines(file.toPath());
+    }
 
     public static void writeLinesToFile1(List<String> lines, File file) throws IOException {
-        for (String s : lines) {
-            writeStringToFile(file, s, Charset.defaultCharset());
-        }
+//        for (String s : lines) {
+//            FileUtils.writeStringToFile(file, s, Charset.defaultCharset());
+//        }
+        FileUtils.writeLines(file, lines);
     }
 
     public static void writeLinesToFile2(List<String> lines, File file) throws IOException {
@@ -60,6 +69,7 @@ public class FileAccessor {
         for (String s : lines) {
             byte[] bytes = s.getBytes(StandardCharsets.UTF_8);
             os.write(bytes);
+            os.write('\n');
 
         }
 
@@ -70,7 +80,12 @@ public class FileAccessor {
         BufferedWriter bw = new BufferedWriter(new FileWriter(file));
         for (String s : lines) {
             bw.write(s, 0, s.length());
+//            bw.write(s);
+            bw.write('\n');
         }
+    }
+    public static void writeLinesToFile4(List<String> lines, File file) throws IOException {
+        Files.write(file.toPath(), lines);
     }
 
     public static void main(String[] args) throws IOException {
@@ -84,5 +99,6 @@ public class FileAccessor {
         System.out.println(readFile1(testFile));
         System.out.println(readFile2(testFile));
         System.out.println(readFile3(testFile));
+        System.out.println(readFile4(testFile));
     }
 }
