@@ -1,6 +1,8 @@
 package com.github.hcsp.io;
 
 
+import org.apache.commons.io.FileUtils;
+
 import java.io.*;
 import java.nio.charset.Charset;
 import java.nio.file.Files;
@@ -35,21 +37,16 @@ public class FileAccessor {
     }
 
     public static List<String> readFile3(File file) throws IOException {
-
-        List<String> readList = new ArrayList<>();
-        //字符流
-        //br缓冲流
-        BufferedReader br = new BufferedReader(new FileReader(file));
-        //存取读取字符的字符数组
-        char[] cbuf = new char[1024];
-        int len;
-        while ((len = br.read(cbuf)) != -1) {
-            String s = String.valueOf(cbuf, 0, len);
+        List<String> readList=new ArrayList<>();
+        BufferedReader br=new BufferedReader(new FileReader(file));
+        String s = "";
+        while ((s=br.readLine())!=null){
             readList.add(s);
         }
         br.close();
-
         return readList;
+
+
     }
 
     public static void writeLinesToFile1(List<String> lines, File file) throws IOException {
@@ -75,14 +72,7 @@ public class FileAccessor {
     }
 
     public static void writeLinesToFile3(List<String> lines, File file) throws IOException {
-        BufferedWriter bw = new BufferedWriter(new FileWriter(file));
-        Iterator<String> iterator = lines.iterator();
-        while (iterator.hasNext()) {
-            bw.write(iterator.next());
-            bw.write("\n");
-
-        }
-        bw.close();
+        FileUtils.writeLines(file,lines);
     }
 
     public static void main(String[] args) throws IOException {
