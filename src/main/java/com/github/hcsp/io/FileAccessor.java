@@ -13,26 +13,12 @@ import java.util.List;
 
 public class FileAccessor {
     public static List<String> readFile1(File file) throws IOException {
-        List<String> readList = new ArrayList<>();
-        byte[] bytes = Files.readAllBytes(file.toPath());
-        String strings = new String(bytes);
-        readList.add(strings);
-        return readList;
+        return Files.readAllLines(file.toPath(),Charset.defaultCharset());
 
     }
 
     public static List<String> readFile2(File file) throws IOException {
-        List<String> readList = new ArrayList<>();
-        InputStream io = new FileInputStream(file);
-        byte[] buff = new byte[1024];
-        int len;
-        while ((len = io.read(buff)) != -1) {
-            String s = new String(buff, 0, len);
-            readList.add(s);
-        }
-        io.close();
-
-        return readList;
+       return FileUtils.readLines(file,Charset.defaultCharset());
 
     }
 
@@ -42,6 +28,7 @@ public class FileAccessor {
         String s = "";
         while ((s=br.readLine())!=null){
             readList.add(s);
+
         }
         br.close();
         return readList;
@@ -64,7 +51,7 @@ public class FileAccessor {
         //hasNext 判断是否有下一个元素
         while (iterator.hasNext()) {
             os.write(iterator.next().getBytes());
-            os.write("\n".getBytes());
+            os.write("\r\n".getBytes());
         }
         os.close();
 
