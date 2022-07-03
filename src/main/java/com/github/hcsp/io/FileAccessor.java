@@ -3,11 +3,9 @@ package com.github.hcsp.io;
 import org.apache.commons.io.IOUtils;
 
 import java.io.*;
-import java.nio.charset.Charset;
 import java.nio.file.Files;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
 
 public class FileAccessor {
@@ -68,7 +66,7 @@ public class FileAccessor {
 
     public static void writeLinesToFile2(List<String> lines, File file) {
         try {
-            Files.write(file.toPath(),lines);
+            Files.write(file.toPath(), lines);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
