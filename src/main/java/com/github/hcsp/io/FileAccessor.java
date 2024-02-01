@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 public class FileAccessor {
     public static List<String> readFile1(File file) throws IOException {
         byte[] bytes = Files.readAllBytes(file.toPath());
@@ -29,7 +30,7 @@ public class FileAccessor {
         List<String> ans = new ArrayList<>();
         BufferedReader br = new BufferedReader(new FileReader(file));
         String s;
-        while((s = br.readLine()) != null){
+        while ((s = br.readLine()) != null) {
             ans.add(s);
         }
         br.close();
@@ -37,7 +38,7 @@ public class FileAccessor {
     }
 
     public static List<String> readFile3(File file) throws IOException {
-        String [] s = FileUtils.readFileToString(file, Charset.defaultCharset()).split("\n");
+        String[] s = FileUtils.readFileToString(file, Charset.defaultCharset()).split("\n");
         return new ArrayList<>(Arrays.asList(s));
     }
 
